@@ -1,6 +1,29 @@
-# BidForm.online - MVP Implementation
+# 🎯 BidForm.online - Embedded Bid Forms with Stripe Split Payments
 
-A modern bid form tool that allows merchants to embed offer forms on any website with automatic split payments.
+> **Turn Every Offer Into a Sale with Embedded Bid Forms**
+
+A modern SaaS platform that allows merchants to embed bid forms on any website with automatic split payments. No coding required, no payment license needed.
+
+## 🚀 Live Demo
+
+Visit [BidForm.online](https://bidform.online) to see it in action!
+
+## ✨ Key Features
+
+- **🔧 No Coding Required** - Embed in any website with a single line of code
+- **⚡ Automatic Split Payments** - Get paid instantly via Stripe Connect  
+- **👥 Seller Control** - Choose winning offers based on your criteria
+- **🌍 Works Anywhere** - Shopify, WooCommerce, Wix, Squarespace, or custom sites
+- **💰 Flexible Pricing** - 5% fee on free plan, upgrade to remove fees
+- **🔒 Secure & Compliant** - Bank-level security with PCI DSS compliance
+
+## 🎯 Perfect For
+
+- Fine art and collectibles bidding
+- Limited-edition product pre-sales  
+- Rare item marketplace
+- Cross-border flexible pricing for small sellers
+- Any business that wants to accept offers instead of fixed prices
 
 ## 🚀 Features Implemented
 
