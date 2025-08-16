@@ -1,0 +1,16 @@
+name = "bidform-online"
+compatibility_date = "2024-01-15"
+
+[env.production]
+name = "bidform-online"
+
+[env.production.vars]
+NODE_ENV = "production"
+
+[[env.production.routes]]
+pattern = "bidform.online/*"
+zone_name = "bidform.online"
+
+[[env.production.routes]]
+pattern = "www.bidform.online/*"
+zone_name = "bidform.online"
