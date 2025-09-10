@@ -1,0 +1,34 @@
+# 🔧 Cloudflare Pages 环境变量配置
+# 复制以下内容到 Cloudflare Pages 设置中
+
+# ===== 必需的环境变量 (4个) =====
+
+# 1. Supabase 项目地址
+VITE_SUPABASE_URL=https://dxsjhbigwotzscnsdiek.supabase.co
+
+# 2. Supabase 公开密钥
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4c2poYmlnd290enNjbnNkaWVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYxMjg2NDIsImV4cCI6MjA3MTcwNDY0Mn0.WgIxJsVQfZkC_u17T_ol9dyJf5oq203rAO6gTRmGWFY
+
+# 3. Stripe 公开密钥 (生产环境)
+VITE_STRIPE_PUBLISHABLE_KEY=pk_live_51RukL5QcIvw8mQk3EM4UzjmVEbKj9Dy7fOf5DI6421Gg1XRQNPx4SRZsZEBP3cZpzuF55jCEjEv1DPssCR9mZohk00j0A5wqwc
+
+# 4. 环境类型
+NODE_ENV=production
+
+# ===== 可选的环境变量 =====
+
+# Google OAuth (如果需要 Google 登录)
+VITE_GOOGLE_CLIENT_ID=378956299242-5sahap5fl9n9f57r694f87g3e0hbrsc4.apps.googleusercontent.com
+
+# 网站标识 (如果有多个网站)
+VITE_SITE_ID=bidform
+
+# ===== 注意事项 =====
+# 1. 以下密钥不要添加到 Cloudflare Pages (仅用于后端服务器):
+#    - SUPABASE_SERVICE_ROLE_KEY (服务端密钥)
+#    - GOOGLE_CLIENT_SECRET (Google 客户端密钥)
+#    - STRIPE_SECRET_KEY (Stripe 私钥)
+#    - STRIPE_WEBHOOK_SECRET (Webhook 密钥)
+#
+# 2. 前端只需要以 VITE_ 开头的变量
+# 3. 添加环境变量后必须重新部署项目才能生效
