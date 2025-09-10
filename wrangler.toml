@@ -1,16 +1,10 @@
 name = "bidform-online"
-compatibility_date = "2024-01-15"
+compatibility_date = "2024-09-10"
 
 [env.production]
 name = "bidform-online"
 
-[env.production.vars]
-NODE_ENV = "production"
-
-[[env.production.routes]]
-pattern = "bidform.online/*"
-zone_name = "bidform.online"
-
-[[env.production.routes]]
-pattern = "www.bidform.online/*"
-zone_name = "bidform.online"
+# Cloudflare Pages configuration
+# Build command: npm run build
+# Build output directory: dist
+# Root directory: (leave empty)
