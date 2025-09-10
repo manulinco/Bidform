@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { useAuthStore } from './stores/authStore';
 import { LoginModal } from './components/Auth/LoginModal';
 import { Dashboard } from './components/Dashboard/Dashboard';
+import { TestPage } from './components/TestPage';
 import { Helmet } from 'react-helmet';
 import { 
   Code2, 
@@ -94,6 +95,10 @@ function App() {
           <Route 
             path="/dashboard" 
             element={user ? <Dashboard /> : <Navigate to="/" replace />} 
+          />
+          <Route 
+            path="/test" 
+            element={<TestPage />} 
           />
         </Routes>
         

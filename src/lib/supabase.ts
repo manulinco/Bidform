@@ -3,17 +3,49 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables')
+// Create supabase client or mock for demo
+let supabase: any
+
+if (!supabaseUrl || !supabaseAnonKey || supabaseUrl === 'https://demo.supabase.co') {
+  console.warn('Using demo Supabase configuration - authentication will be simulated')
+  
+  // Create a mock supabase client for demo
+  supabase = {
+    auth: {
+      getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+      onAuthStateChange: () => ({ data: { subscription: null }, error: null }),
+      signInWithPassword: () => Promise.resolve({ data: null, error: new Error('Demo mode - authentication disabled') }),
+      signUp: () => Promise.resolve({ data: null, error: new Error('Demo mode - authentication disabled') }),
+      signOut: () => Promise.resolve({ error: null }),
+      signInWithOAuth: () => Promise.resolve({ data: null, error: new Error('Demo mode - authentication disabled') })
+    },
+    from: () => ({
+      insert: () => ({ 
+        select: () => ({ 
+          single: () => Promise.resolve({ data: null, error: new Error('Demo mode - database disabled') }) 
+        }) 
+      }),
+      select: () => ({ 
+        eq: () => ({ 
+          single: () => Promise.resolve({ data: null, error: { code: 'PGRST116' } }) 
+        }) 
+      }),
+      update: () => ({ 
+        eq: () => Promise.resolve({ error: new Error('Demo mode - database disabled') }) 
+      })
+    })
+  }
+} else {
+  supabase = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true
+    }
+  })
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
-  }
-})
+export { supabase }
 
 export type Database = {
   public: {
