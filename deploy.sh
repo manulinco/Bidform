@@ -1,55 +1,86 @@
 #!/bin/bash
 
-# BidForm.online 快速部署脚本
+# 设置颜色输出
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
 
-echo "🚀 BidForm.online 部署脚本"
-echo "=========================="
+echo -e "${BLUE}🚀 BidForm Cloudflare Pages 部署脚本${NC}"
+echo "====================================="
+echo
 
-# 检查是否在正确的目录
-if [ ! -f "package.json" ]; then
-    echo "❌ 错误: 请在项目根目录运行此脚本"
+echo -e "${YELLOW}📋 检查系统环境...${NC}"
+
+# 检查 Node.js
+if ! command -v node &> /dev/null; then
+    echo -e "${RED}❌ 错误: 未找到 Node.js，请先安装 Node.js${NC}"
+    echo -e "${BLUE}📥 安装指南: https://nodejs.org/${NC}"
     exit 1
 fi
 
-# 检查 git 状态
-echo "📋 检查 Git 状态..."
-git status
+echo -e "${GREEN}✅ Node.js 已安装: $(node --version)${NC}"
+echo
 
-# 添加所有更改
-echo "📦 添加文件到 Git..."
-git add .
+echo -e "${YELLOW}📦 检查 Wrangler CLI...${NC}"
 
-# 提交更改
-echo "💾 提交更改..."
-read -p "请输入提交信息 (默认: Update project): " commit_message
-commit_message=${commit_message:-"Update project"}
-git commit -m "$commit_message"
-
-# 推送到 GitHub
-echo "🔄 推送到 GitHub..."
-echo "如果这是第一次推送，请确保已在 GitHub 创建仓库: https://github.com/manulinco/bidform"
-echo "如果遇到权限问题，请使用个人访问令牌作为密码"
-
-git push -u origin main
-
-if [ $? -eq 0 ]; then
-    echo "✅ 成功推送到 GitHub!"
-    echo "🌐 仓库地址: https://github.com/manulinco/bidform"
-    echo ""
-    echo "🚀 下一步部署选项:"
-    echo "1. Vercel: https://vercel.com (推荐)"
-    echo "2. Netlify: https://netlify.com"
-    echo "3. GitHub Pages: 在仓库设置中启用"
-    echo ""
-    echo "📖 详细部署指南请查看 DEPLOYMENT.md"
+# 检查并安装 Wrangler CLI
+if ! command -v wrangler &> /dev/null; then
+    echo -e "${YELLOW}📥 安装 Wrangler CLI...${NC}"
+    npm install -g wrangler
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}❌ Wrangler CLI 安装失败${NC}"
+        exit 1
+    fi
+    echo -e "${GREEN}✅ Wrangler CLI 安装成功${NC}"
 else
-    echo "❌ 推送失败，请检查:"
-    echo "1. GitHub 仓库是否已创建"
-    echo "2. 是否有推送权限"
-    echo "3. 网络连接是否正常"
-    echo ""
-    echo "💡 解决方案:"
-    echo "1. 访问 https://github.com/new 创建仓库"
-    echo "2. 使用个人访问令牌进行身份验证"
-    echo "3. 查看 DEPLOYMENT.md 获取详细指南"
+    echo -e "${GREEN}✅ Wrangler CLI 已安装: $(wrangler --version)${NC}"
 fi
+echo
+
+echo -e "${YELLOW}🔐 登录 Cloudflare...${NC}"
+echo -e "${BLUE}📝 浏览器将打开，请登录你的 Cloudflare 账户${NC}"
+wrangler login
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ Cloudflare 登录失败${NC}"
+    exit 1
+fi
+echo -e "${GREEN}✅ Cloudflare 登录成功${NC}"
+echo
+
+echo -e "${YELLOW}📋 创建 Pages 项目...${NC}"
+echo -e "${BLUE}📝 项目名称: bidform-app${NC}"
+wrangler pages project create bidform-app
+echo
+
+echo -e "${YELLOW}🏗️ 构建项目...${NC}"
+npm run build
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ 项目构建失败${NC}"
+    echo -e "${YELLOW}💡 请检查代码是否有错误${NC}"
+    exit 1
+fi
+echo -e "${GREEN}✅ 项目构建成功${NC}"
+echo
+
+echo -e "${YELLOW}🚀 部署到 Cloudflare Pages...${NC}"
+wrangler pages deploy dist --project-name=bidform-app
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ 部署失败${NC}"
+    exit 1
+fi
+
+echo
+echo -e "${GREEN}🎉 部署成功！${NC}"
+echo "====================================="
+echo -e "${BLUE}🌐 访问地址: https://bidform-app.pages.dev${NC}"
+echo -e "${BLUE}🧪 测试页面: https://bidform-app.pages.dev/test${NC}"
+echo
+echo -e "${YELLOW}📝 下一步:${NC}"
+echo "1. 在 Cloudflare Pages 设置中添加环境变量"
+echo "2. 配置 Supabase 和 Stripe 密钥"
+echo "3. 测试所有功能是否正常"
+echo
+echo -e "${BLUE}📖 详细指南请查看: DEPLOY_GUIDE.md${NC}"
+echo
