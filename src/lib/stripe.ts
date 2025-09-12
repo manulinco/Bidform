@@ -1,6 +1,9 @@
 import { loadStripe } from '@stripe/stripe-js'
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY!)
+const stripeKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+const stripePromise = (stripeKey && stripeKey !== 'pk_test_...') 
+  ? loadStripe(stripeKey)
+  : Promise.resolve(null)
 
 export { stripePromise }
 

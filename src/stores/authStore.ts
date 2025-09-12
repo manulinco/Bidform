@@ -17,6 +17,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   loading: true,
 
   signIn: async (email: string, password: string) => {
+    if (!supabase) {
+      throw new Error('Demo mode - authentication disabled')
+    }
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -25,6 +28,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   signUp: async (email: string, password: string) => {
+    if (!supabase) {
+      throw new Error('Demo mode - authentication disabled')
+    }
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -33,11 +39,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   signOut: async () => {
+    if (!supabase) {
+      return
+    }
     const { error } = await supabase.auth.signOut()
     if (error) throw error
   },
 
   signInWithProvider: async (provider: 'google' | 'azure') => {
+    if (!supabase) {
+      throw new Error('Demo mode - authentication disabled')
+    }
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
@@ -48,6 +60,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   initialize: () => {
+    if (!supabase) {
+      set({ user: null, loading: false })
+      return
+    }
+    
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       set({ user: session?.user ?? null, loading: false })

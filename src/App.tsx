@@ -5,6 +5,7 @@ import { useAuthStore } from './stores/authStore';
 import { LoginModal } from './components/Auth/LoginModal';
 import { Dashboard } from './components/Dashboard/Dashboard';
 import { TestPage } from './components/TestPage';
+import { DemoPage } from './components/DemoPage';
 import { Helmet } from 'react-helmet';
 import { 
   Code2, 
@@ -99,6 +100,10 @@ function App() {
           <Route 
             path="/test" 
             element={<TestPage />} 
+          />
+          <Route 
+            path="/demo" 
+            element={<DemoPage />} 
           />
         </Routes>
         
