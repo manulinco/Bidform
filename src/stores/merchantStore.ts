@@ -44,7 +44,7 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
       
       // 如果没有商家记录，创建一个
       if (!get().merchant) {
-        await get().createMerchant(userId, '演示商家')
+        await get().createMerchant(userId, 'Demo Merchant')
       }
       
       // 获取表单和出价
@@ -66,7 +66,7 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
     const demoMerchant: Merchant = {
       id: 'demo-merchant-123',
       user_id: 'demo-user-123',
-      business_name: '演示商家',
+      business_name: 'Demo Merchant',
       created_at: new Date().toISOString()
     }
 
@@ -74,8 +74,8 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
       {
         id: 'demo-vintage-watch',
         merchant_id: 'demo-merchant-123',
-        title: '1960年代劳力士古董腕表',
-        description: '稀有的1960年代劳力士Submariner，保存完好，带原装表盒和证书。这是一款极具收藏价值的古董腕表，适合投资和收藏。',
+        title: '1960s Vintage Rolex Watch',
+        description: 'Rare 1960s Rolex Submariner in excellent condition with original box and certificate. A highly collectible vintage timepiece perfect for investment and collection.',
         price: 25000,
         currency: 'CNY',
         min_bid_ratio: 70,
@@ -89,8 +89,8 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
       {
         id: 'demo-art-painting',
         merchant_id: 'demo-merchant-123',
-        title: '现代抽象油画作品',
-        description: '知名艺术家创作的现代抽象油画，尺寸120x80cm，已装裱，适合收藏或装饰。作品具有很高的艺术价值和升值潜力。',
+        title: 'Modern Abstract Oil Painting',
+        description: 'Contemporary abstract oil painting by renowned artist, 120x80cm, professionally framed. Perfect for collection or decoration with high artistic value and appreciation potential.',
         price: 8800,
         currency: 'CNY',
         min_bid_ratio: 60,
@@ -104,8 +104,8 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
       {
         id: 'demo-vintage-car',
         merchant_id: 'demo-merchant-123',
-        title: '1985年保时捷911经典跑车',
-        description: '经典的1985年保时捷911 Carrera，里程数较低，保养记录完整，是收藏家的理想选择。车况优良，具有很高的收藏价值。',
+        title: '1985 Porsche 911 Classic Sports Car',
+        description: 'Classic 1985 Porsche 911 Carrera with low mileage and complete maintenance records. Ideal choice for collectors with excellent condition and high collectible value.',
         price: 180000,
         currency: 'CNY',
         min_bid_ratio: 80,
@@ -123,9 +123,9 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
         id: 'demo-offer-1',
         form_id: 'demo-vintage-watch',
         buyer_email: 'zhang.collector@example.com',
-        buyer_name: '张先生',
+        buyer_name: 'Mr. Zhang',
         offer_amount: 22000,
-        message: '这块表很有收藏价值，我是专业的古董表收藏家，希望能够成交。',
+        message: 'This watch has great collectible value. I am a professional vintage watch collector and hope to complete this transaction.',
         status: 'pending',
         created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
       },
@@ -133,9 +133,9 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
         id: 'demo-offer-2',
         form_id: 'demo-art-painting',
         buyer_email: 'li.artist@example.com',
-        buyer_name: '李女士',
+        buyer_name: 'Ms. Li',
         offer_amount: 7500,
-        message: '很喜欢这幅画的风格，希望能够收藏。我是艺术爱好者，这幅画很适合我的收藏。',
+        message: 'I really love the style of this painting and hope to add it to my collection. As an art enthusiast, this piece would fit perfectly in my collection.',
         status: 'accepted',
         created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
       },
@@ -143,9 +143,9 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
         id: 'demo-offer-3',
         form_id: 'demo-vintage-watch',
         buyer_email: 'wang.investor@example.com',
-        buyer_name: '王总',
+        buyer_name: 'Mr. Wang',
         offer_amount: 26000,
-        message: '我对这款劳力士很感兴趣，价格可以商量。我有多年的投资经验，希望能够收藏这块表。',
+        message: 'I am very interested in this Rolex, and the price is negotiable. With years of investment experience, I hope to add this watch to my collection.',
         status: 'pending',
         created_at: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString()
       },
@@ -153,9 +153,9 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
         id: 'demo-offer-4',
         form_id: 'demo-vintage-car',
         buyer_email: 'chen.racer@example.com',
-        buyer_name: '陈先生',
+        buyer_name: 'Mr. Chen',
         offer_amount: 175000,
-        message: '我是保时捷爱好者，这辆911非常经典。希望能够成为它的新主人。',
+        message: 'I am a Porsche enthusiast, and this 911 is absolutely classic. I hope to become its new owner.',
         status: 'pending',
         created_at: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString()
       },
@@ -163,9 +163,9 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
         id: 'demo-offer-5',
         form_id: 'demo-art-painting',
         buyer_email: 'liu.gallery@example.com',
-        buyer_name: '刘馆长',
+        buyer_name: 'Director Liu',
         offer_amount: 9200,
-        message: '我们画廊对这幅作品很感兴趣，希望能够展出。',
+        message: 'Our gallery is very interested in this artwork and would like to exhibit it.',
         status: 'rejected',
         created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()
       },
@@ -173,9 +173,9 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
         id: 'demo-offer-6',
         form_id: 'demo-vintage-watch',
         buyer_email: 'zhao.watch@example.com',
-        buyer_name: '赵女士',
+        buyer_name: 'Ms. Zhao',
         offer_amount: 20000,
-        message: '这是给我先生的生日礼物，他很喜欢古董表。',
+        message: 'This is a birthday gift for my husband, who loves vintage watches.',
         status: 'rejected',
         created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
       },
@@ -183,9 +183,9 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
         id: 'demo-offer-7',
         form_id: 'demo-vintage-car',
         buyer_email: 'sun.collector@example.com',
-        buyer_name: '孙总',
+        buyer_name: 'Mr. Sun',
         offer_amount: 185000,
-        message: '我收藏了很多经典跑车，这辆911是我一直在寻找的型号。价格合理，希望能够成交。',
+        message: 'I have collected many classic sports cars, and this 911 is the model I have been looking for. The price is reasonable, and I hope to complete the transaction.',
         status: 'accepted',
         created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
       },
@@ -193,9 +193,9 @@ export const useMerchantStore = create<MerchantState>((set, get) => ({
         id: 'demo-offer-8',
         form_id: 'demo-art-painting',
         buyer_email: 'wu.designer@example.com',
-        buyer_name: '吴设计师',
+        buyer_name: 'Designer Wu',
         offer_amount: 8000,
-        message: '作为室内设计师，我觉得这幅画很适合我正在设计的项目。',
+        message: 'As an interior designer, I think this painting would be perfect for the project I am currently designing.',
         status: 'pending',
         created_at: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString()
       }

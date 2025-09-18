@@ -40,14 +40,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   signIn: async (email: string, password: string) => {
     set({ loading: true })
     try {
-      // 检查是否为演示模式
+      // Check if in demo mode
       if (email === 'demo@bidform.online' || email.includes('demo') || password === 'demo123') {
-        // 创建模拟用户
+        // Create mock user
         const demoUser = {
           id: 'demo-user-123',
           email: email,
           user_metadata: {
-            name: '演示用户'
+            name: 'Demo User'
           },
           created_at: new Date().toISOString()
         }

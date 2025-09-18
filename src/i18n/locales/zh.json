@@ -1,0 +1,271 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "copy": "复制",
+    "share": "分享",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "export": "导出",
+    "import": "导入",
+    "refresh": "刷新"
+  },
+  "navigation": {
+    "dashboard": "仪表板",
+    "products": "我的产品",
+    "offers": "收到的报价",
+    "history": "我的出价历史",
+    "profile": "个人资料",
+    "settings": "设置",
+    "logout": "退出登录",
+    "login": "登录",
+    "signup": "注册"
+  },
+  "dashboard": {
+    "title": "重新定义拥有的意义！",
+    "subtitle": "真正的拥有者，懂得在合适的时候为心爱之物寻找更好的归宿。",
+    "cta": "开始有意义的传承",
+    "welcomeBack": "欢迎回来",
+    "quickStats": "快速统计",
+    "activeProducts": "活跃产品",
+    "totalOffers": "总报价数",
+    "successfulDeals": "成功交易",
+    "totalRevenue": "总收入",
+    "recentActivity": "最近活动",
+    "viewAll": "查看全部",
+    "noActivity": "暂无最近活动",
+    "createFirst": "创建您的第一个产品开始使用"
+  },
+  "productLinkGenerator": {
+    "title": "有意义的传承链接生成器",
+    "subtitle": "创建专属链接，让懂得拥有真正意义的人发现你的心爱之物",
+    "selectProduct": "选择产品",
+    "noProducts": "暂无产品",
+    "noProductsDesc": "创建您的第一个产品以开始生成链接",
+    "createFirst": "创建您的第一个产品",
+    "createProduct": "创建产品",
+    "tabs": {
+      "link": "产品链接",
+      "embed": "嵌入代码",
+      "share": "有意义的连接"
+    },
+    "shareableLink": "可分享的产品链接",
+    "embedCode": "嵌入代码",
+    "copyCode": "复制代码",
+    "socialShare": "社交媒体分享",
+    "highConversion": {
+      "title": "有意义的连接系统",
+      "subtitle": "创建超越价格的连接 - 理解比数字更重要",
+      "features": {
+        "stories": "个人故事",
+        "value": "价值表达",
+        "meaning": "有意义的传承"
+      }
+    }
+  },
+  "sharePage": {
+    "loading": "加载产品信息中...",
+    "notFound": "产品未找到",
+    "backToBrowse": "返回浏览",
+    "valueHint": "展示你对拥有的深层理解",
+    "suggestedRange": "建议范围",
+    "meaningMessage": "真正的拥有，是让美好得到延续",
+    "priceLabel": "表达你的理解",
+    "messageLabel": "告诉卖家你理解拥有的真正意义",
+    "messageHelper": "你会如何延续它的价值",
+    "messagePlaceholder": "告诉卖家为什么应该选择你，你会如何珍惜它（最多120字）",
+    "characterCount": "个字符",
+    "submitButton": "成为有意义的拥有者",
+    "submitting": "提交中...",
+    "security": {
+      "escrow": "安全托管",
+      "verified": "已验证安全",
+      "guarantee": "传承保障"
+    },
+    "bottomMessage": "真正的拥有，是让美好延续",
+    "myConnections": "我的连接"
+  },
+  "bidPage": {
+    "loading": "加载产品信息中...",
+    "notFound": "产品未找到",
+    "backToBrowse": "返回浏览",
+    "startingPrice": "起始价格",
+    "currentHighest": "当前最高价",
+    "timeLeft": "剩余时间",
+    "ended": "拍卖已结束",
+    "placeBid": "出价",
+    "bidHistory": "出价历史",
+    "description": "描述",
+    "details": "详情",
+    "condition": "状况",
+    "category": "类别",
+    "seller": "卖家",
+    "shipping": "运输",
+    "returns": "退货",
+    "askQuestion": "询问问题"
+  },
+  "createProduct": {
+    "title": "创建新产品",
+    "subtitle": "与那些理解其价值的人分享您的珍贵物品",
+    "form": {
+      "title": "产品标题",
+      "titlePlaceholder": "为您的物品输入描述性标题",
+      "description": "描述",
+      "descriptionPlaceholder": "讲述这件物品的故事 - 它对您为什么特别",
+      "category": "类别",
+      "condition": "状况",
+      "startingPrice": "起始价格",
+      "reservePrice": "保留价格（可选）",
+      "duration": "拍卖持续时间",
+      "images": "图片",
+      "addImages": "添加图片",
+      "dragDrop": "拖拽图片到这里，或点击选择",
+      "maxImages": "最多10张图片",
+      "shipping": "运输选项",
+      "returns": "退货政策"
+    },
+    "categories": {
+      "art": "艺术品与收藏品",
+      "jewelry": "珠宝与手表",
+      "electronics": "电子产品",
+      "fashion": "时尚与配饰",
+      "home": "家居与园艺",
+      "books": "书籍与媒体",
+      "sports": "体育与娱乐",
+      "automotive": "汽车",
+      "other": "其他"
+    },
+    "conditions": {
+      "new": "全新",
+      "likeNew": "近全新",
+      "excellent": "优秀",
+      "good": "良好",
+      "fair": "一般",
+      "poor": "较差"
+    },
+    "durations": {
+      "1day": "1天",
+      "3days": "3天",
+      "7days": "7天",
+      "10days": "10天",
+      "14days": "14天"
+    }
+  },
+  "offers": {
+    "title": "收到的报价",
+    "subtitle": "查看那些理解您物品价值的人的报价",
+    "noOffers": "暂无报价",
+    "noOffersDesc": "当买家出价时，它们会出现在这里",
+    "status": {
+      "pending": "待处理",
+      "accepted": "已接受",
+      "declined": "已拒绝",
+      "expired": "已过期"
+    },
+    "actions": {
+      "accept": "接受",
+      "decline": "拒绝",
+      "counter": "反报价",
+      "message": "发送消息"
+    },
+    "filters": {
+      "all": "所有状态",
+      "pending": "待处理",
+      "accepted": "已接受",
+      "declined": "已拒绝"
+    },
+    "sort": {
+      "latest": "最新优先",
+      "oldest": "最旧优先",
+      "highest": "最高价格",
+      "lowest": "最低价格"
+    },
+    "exportCsv": "导出CSV",
+    "searchPlaceholder": "按买家姓名或邮箱搜索..."
+  },
+  "shareCardGenerator": {
+    "title": "有意义的连接卡片生成器",
+    "subtitle": "创建吸引理解型买家的引人注目的分享卡片",
+    "form": {
+      "productSelect": "选择产品",
+      "selectPlaceholder": "选择一个产品来创建分享卡片",
+      "customTitle": "自定义标题（可选）",
+      "customTitlePlaceholder": "覆盖默认产品标题",
+      "customMessage": "自定义消息（可选）",
+      "customMessagePlaceholder": "为潜在买家添加个人消息",
+      "style": "卡片样式",
+      "template": "模板"
+    },
+    "styles": {
+      "modern": "现代",
+      "classic": "经典",
+      "minimal": "简约",
+      "elegant": "优雅"
+    },
+    "templates": {
+      "default": "默认",
+      "story": "故事焦点",
+      "value": "价值焦点",
+      "legacy": "传承焦点"
+    },
+    "actions": {
+      "generate": "生成分享卡片",
+      "regenerate": "重新生成卡片",
+      "copyLink": "复制传承链接",
+      "previewPage": "预览连接页面",
+      "downloadCard": "下载卡片",
+      "shareCard": "分享卡片"
+    },
+    "preview": {
+      "title": "分享卡片预览",
+      "noPreview": "生成卡片以查看预览"
+    },
+    "usage": {
+      "title": "如何使用您的连接卡片",
+      "steps": {
+        "1": "在社交媒体上分享卡片以吸引理解型买家",
+        "2": "使用链接将买家引导到您的有意义连接页面",
+        "3": "基于价格和个人连接来审查报价",
+        "4": "选择真正理解您物品价值的买家"
+      }
+    },
+    "features": {
+      "stories": "个人故事",
+      "value": "价值表达",
+      "legacy": "有意义的传承"
+    }
+  },
+  "language": {
+    "switch": "切换语言",
+    "english": "English",
+    "chinese": "中文",
+    "current": "当前语言"
+  },
+  "errors": {
+    "generic": "出现了问题，请重试。",
+    "network": "网络错误，请检查您的连接。",
+    "notFound": "未找到请求的项目。",
+    "unauthorized": "您无权执行此操作。",
+    "validation": "请检查您的输入并重试。",
+    "server": "服务器错误，请稍后重试。"
+  },
+  "success": {
+    "saved": "保存成功！",
+    "updated": "更新成功！",
+    "deleted": "删除成功！",
+    "created": "创建成功！",
+    "sent": "发送成功！",
+    "copied": "已复制到剪贴板！"
+  }
+}

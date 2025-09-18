@@ -1,0 +1,271 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "copy": "Copy",
+    "share": "Share",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "export": "Export",
+    "import": "Import",
+    "refresh": "Refresh"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "products": "My Products",
+    "offers": "Received Offers",
+    "history": "My Bid History",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  "dashboard": {
+    "title": "Redefining the Meaning of Ownership!",
+    "subtitle": "True owners know when to find better homes for their treasures.",
+    "cta": "Start Meaningful Legacy",
+    "welcomeBack": "Welcome back",
+    "quickStats": "Quick Stats",
+    "activeProducts": "Active Products",
+    "totalOffers": "Total Offers",
+    "successfulDeals": "Successful Deals",
+    "totalRevenue": "Total Revenue",
+    "recentActivity": "Recent Activity",
+    "viewAll": "View All",
+    "noActivity": "No recent activity",
+    "createFirst": "Create your first product to get started"
+  },
+  "productLinkGenerator": {
+    "title": "Meaningful Legacy Link Generator",
+    "subtitle": "Create exclusive links for those who understand the true meaning of ownership",
+    "selectProduct": "Select Product",
+    "noProducts": "No Products Yet",
+    "noProductsDesc": "Create your first product to start generating links",
+    "createFirst": "Create Your First Product",
+    "createProduct": "Create Product",
+    "tabs": {
+      "link": "Product Link",
+      "embed": "Embed Code",
+      "share": "Meaningful Connection"
+    },
+    "shareableLink": "Shareable Product Link",
+    "embedCode": "Embed Code",
+    "copyCode": "Copy Code",
+    "socialShare": "Share on Social Media",
+    "highConversion": {
+      "title": "Meaningful Connection System",
+      "subtitle": "Create connections that transcend price - where understanding matters more than numbers",
+      "features": {
+        "stories": "Personal Stories",
+        "value": "Value Expression", 
+        "meaning": "Meaningful Legacy"
+      }
+    }
+  },
+  "sharePage": {
+    "loading": "Loading product information...",
+    "notFound": "Product not found",
+    "backToBrowse": "Back to Browse",
+    "valueHint": "Show your deep understanding of ownership",
+    "suggestedRange": "Suggested range",
+    "meaningMessage": "True ownership means letting beauty continue",
+    "priceLabel": "Express Your Understanding",
+    "messageLabel": "Tell the seller you understand the true meaning of ownership",
+    "messageHelper": "How you will continue its value",
+    "messagePlaceholder": "Tell why it should be you and how you'll cherish it (max 120 chars)",
+    "characterCount": "characters",
+    "submitButton": "Become a Meaningful Owner",
+    "submitting": "Submitting...",
+    "security": {
+      "escrow": "Secure Escrow",
+      "verified": "Verified Safe",
+      "guarantee": "Legacy Guarantee"
+    },
+    "bottomMessage": "True ownership means letting beauty continue",
+    "myConnections": "My Connections"
+  },
+  "bidPage": {
+    "loading": "Loading product information...",
+    "notFound": "Product not found",
+    "backToBrowse": "Back to Browse",
+    "startingPrice": "Starting Price",
+    "currentHighest": "Current Highest",
+    "timeLeft": "Time Left",
+    "ended": "Auction Ended",
+    "placeBid": "Place Bid",
+    "bidHistory": "Bid History",
+    "description": "Description",
+    "details": "Details",
+    "condition": "Condition",
+    "category": "Category",
+    "seller": "Seller",
+    "shipping": "Shipping",
+    "returns": "Returns",
+    "askQuestion": "Ask Question"
+  },
+  "createProduct": {
+    "title": "Create New Product",
+    "subtitle": "Share your treasured item with those who will understand its value",
+    "form": {
+      "title": "Product Title",
+      "titlePlaceholder": "Enter a descriptive title for your item",
+      "description": "Description",
+      "descriptionPlaceholder": "Tell the story of this item - why it's special to you",
+      "category": "Category",
+      "condition": "Condition",
+      "startingPrice": "Starting Price",
+      "reservePrice": "Reserve Price (Optional)",
+      "duration": "Auction Duration",
+      "images": "Images",
+      "addImages": "Add Images",
+      "dragDrop": "Drag and drop images here, or click to select",
+      "maxImages": "Maximum 10 images",
+      "shipping": "Shipping Options",
+      "returns": "Return Policy"
+    },
+    "categories": {
+      "art": "Art & Collectibles",
+      "jewelry": "Jewelry & Watches",
+      "electronics": "Electronics",
+      "fashion": "Fashion & Accessories",
+      "home": "Home & Garden",
+      "books": "Books & Media",
+      "sports": "Sports & Recreation",
+      "automotive": "Automotive",
+      "other": "Other"
+    },
+    "conditions": {
+      "new": "New",
+      "likeNew": "Like New",
+      "excellent": "Excellent",
+      "good": "Good",
+      "fair": "Fair",
+      "poor": "Poor"
+    },
+    "durations": {
+      "1day": "1 Day",
+      "3days": "3 Days",
+      "7days": "7 Days",
+      "10days": "10 Days",
+      "14days": "14 Days"
+    }
+  },
+  "offers": {
+    "title": "Received Offers",
+    "subtitle": "Review offers from those who understand your item's value",
+    "noOffers": "No offers yet",
+    "noOffersDesc": "When buyers make offers, they'll appear here",
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "declined": "Declined",
+      "expired": "Expired"
+    },
+    "actions": {
+      "accept": "Accept",
+      "decline": "Decline",
+      "counter": "Counter Offer",
+      "message": "Send Message"
+    },
+    "filters": {
+      "all": "All Status",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "declined": "Declined"
+    },
+    "sort": {
+      "latest": "Latest First",
+      "oldest": "Oldest First",
+      "highest": "Highest Price",
+      "lowest": "Lowest Price"
+    },
+    "exportCsv": "Export CSV",
+    "searchPlaceholder": "Search by buyer name or email..."
+  },
+  "shareCardGenerator": {
+    "title": "Meaningful Connection Card Generator",
+    "subtitle": "Create compelling share cards that attract understanding buyers",
+    "form": {
+      "productSelect": "Select Product",
+      "selectPlaceholder": "Choose a product to create share card",
+      "customTitle": "Custom Title (Optional)",
+      "customTitlePlaceholder": "Override the default product title",
+      "customMessage": "Custom Message (Optional)", 
+      "customMessagePlaceholder": "Add a personal message to potential buyers",
+      "style": "Card Style",
+      "template": "Template"
+    },
+    "styles": {
+      "modern": "Modern",
+      "classic": "Classic",
+      "minimal": "Minimal",
+      "elegant": "Elegant"
+    },
+    "templates": {
+      "default": "Default",
+      "story": "Story Focus",
+      "value": "Value Focus",
+      "legacy": "Legacy Focus"
+    },
+    "actions": {
+      "generate": "Generate Share Card",
+      "regenerate": "Regenerate Card",
+      "copyLink": "Copy Legacy Link",
+      "previewPage": "Preview Connection Page",
+      "downloadCard": "Download Card",
+      "shareCard": "Share Card"
+    },
+    "preview": {
+      "title": "Share Card Preview",
+      "noPreview": "Generate a card to see preview"
+    },
+    "usage": {
+      "title": "How to Use Your Connection Card",
+      "steps": {
+        "1": "Share the card on social media to attract understanding buyers",
+        "2": "Use the link to direct buyers to your meaningful connection page", 
+        "3": "Review offers based on both price and personal connection",
+        "4": "Choose the buyer who truly understands your item's value"
+      }
+    },
+    "features": {
+      "stories": "Personal Stories",
+      "value": "Value Expression",
+      "legacy": "Meaningful Legacy"
+    }
+  },
+  "language": {
+    "switch": "Switch Language",
+    "english": "English",
+    "chinese": "中文",
+    "current": "Current Language"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "notFound": "The requested item was not found.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "validation": "Please check your input and try again.",
+    "server": "Server error. Please try again later."
+  },
+  "success": {
+    "saved": "Successfully saved!",
+    "updated": "Successfully updated!",
+    "deleted": "Successfully deleted!",
+    "created": "Successfully created!",
+    "sent": "Successfully sent!",
+    "copied": "Copied to clipboard!"
+  }
+}

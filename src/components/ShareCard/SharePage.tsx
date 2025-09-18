@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { Clock, Shield, TrendingUp, Users, History, AlertCircle, CheckCircle, Info } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useMerchantStore } from '../../stores/merchantStore'
 import { BidForm } from '../../types'
 
@@ -198,14 +199,14 @@ export const SharePage: React.FC = () => {
             {/* 缘分力量提示 */}
             <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30 rounded-xl p-4">
               <div className="flex items-center mb-2">
-                <span className="text-2xl mr-2">✨</span>
-                <span className="text-purple-300 font-medium">Your Words Create Destiny</span>
+                <span className="text-2xl mr-2">🌈</span>
+                <span className="text-purple-300 font-medium">展示你对拥有的深层理解</span>
               </div>
               <div className="text-white">
-                Suggested range: <span className="font-bold">{symbol}{config.suggestedMin.toLocaleString()} - {symbol}{config.suggestedMax.toLocaleString()}</span>
+                建议范围: <span className="font-bold">{symbol}{config.suggestedMin.toLocaleString()} - {symbol}{config.suggestedMax.toLocaleString()}</span>
               </div>
               <div className="text-purple-200 text-sm mt-1">
-                💫 Sometimes it's not the highest bid, but the right connection that wins
+                🌈 真正的拥有，是让美好得到延续
               </div>
             </div>
 
@@ -232,8 +233,8 @@ export const SharePage: React.FC = () => {
               {/* 买家留言输入 */}
               <div>
                 <label className="block text-gray-300 text-sm font-medium mb-2">
-                  Add a short note to earn the choice
-                  <span className="text-xs text-purple-300 ml-2">Your words unlock extra worth</span>
+                  告诉卖家你理解拥有的真正意义
+                  <span className="text-xs text-purple-300 ml-2">你会如何延续它的价值</span>
                 </label>
                 <textarea
                   value={message}
@@ -279,8 +280,8 @@ export const SharePage: React.FC = () => {
                     </div>
                   ) : (
                     <>
-                      <span className="text-xl mr-2">✨</span>
-                      Activate Your Destiny Power
+                      <span className="text-xl mr-2">🌈</span>
+                      成为有意义的拥有者
                     </>
                   )}
                 </span>
@@ -306,8 +307,8 @@ export const SharePage: React.FC = () => {
             {/* 底部链接 */}
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center text-gray-400">
-                <span className="text-purple-400 mr-1">💫</span>
-                <span>Destiny Favors Connection</span>
+                <span className="text-purple-400 mr-1">🌈</span>
+                <span>真正的拥有，是让美好延续</span>
               </div>
               <Link 
                 to="/buyer-dashboard" 

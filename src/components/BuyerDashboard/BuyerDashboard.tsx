@@ -63,7 +63,7 @@ export const BuyerDashboard: React.FC = () => {
                   }`}
                 >
                   <History className="w-5 h-5 mr-3" />
-                  我的出价历史
+                  My Bid History
                 </button>
                 
                 <button
@@ -75,7 +75,7 @@ export const BuyerDashboard: React.FC = () => {
                   }`}
                 >
                   <User className="w-5 h-5 mr-3" />
-                  个人资料
+                  Profile
                 </button>
 
                 <button
@@ -87,7 +87,7 @@ export const BuyerDashboard: React.FC = () => {
                   }`}
                 >
                   <Bell className="w-5 h-5 mr-3" />
-                  通知设置
+                  Notifications
                 </button>
 
                 <Link
@@ -95,7 +95,7 @@ export const BuyerDashboard: React.FC = () => {
                   className="w-full flex items-center px-4 py-3 text-left rounded-xl transition-colors text-gray-600 hover:bg-gray-100"
                 >
                   <Home className="w-5 h-5 mr-3" />
-                  返回首页
+                  Back to Home
                 </Link>
               </div>
 
@@ -107,7 +107,7 @@ export const BuyerDashboard: React.FC = () => {
                   </div>
                   <div className="ml-3">
                     <h3 className="text-sm font-medium text-gray-900">{userName}</h3>
-                    <p className="text-xs text-gray-600">买家账户</p>
+                    <p className="text-xs text-gray-600">Buyer Account</p>
                   </div>
                 </div>
                 <div className="text-xs text-gray-500">
@@ -127,12 +127,12 @@ export const BuyerDashboard: React.FC = () => {
 
             {activeTab === 'profile' && (
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">个人资料</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Profile</h2>
                 
                 <div className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      用户名
+                      Username
                     </label>
                     <input
                       type="text"
@@ -144,7 +144,7 @@ export const BuyerDashboard: React.FC = () => {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      邮箱地址
+                      Email Address
                     </label>
                     <input
                       type="email"
@@ -156,36 +156,36 @@ export const BuyerDashboard: React.FC = () => {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      账户类型
+                      Account Type
                     </label>
                     <div className="px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg">
-                      <span className="text-blue-700 font-medium">买家账户</span>
+                      <span className="text-blue-700 font-medium">Buyer Account</span>
                     </div>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      注册时间
+                      Registration Date
                     </label>
                     <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg">
                       <span className="text-gray-700">
-                        {user?.created_at ? new Date(user.created_at).toLocaleDateString('zh-CN') : '未知'}
+                        {user?.created_at ? new Date(user.created_at).toLocaleDateString('en-US') : 'Unknown'}
                       </span>
                     </div>
                   </div>
                 </div>
                 
                 <div className="mt-8 pt-6 border-t border-gray-200">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">账户操作</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Actions</h3>
                   <div className="space-y-3">
                     <button className="w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
-                      修改密码
+                      Change Password
                     </button>
                     <button className="w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
-                      导出数据
+                      Export Data
                     </button>
                     <button className="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                      删除账户
+                      Delete Account
                     </button>
                   </div>
                 </div>
@@ -194,13 +194,13 @@ export const BuyerDashboard: React.FC = () => {
 
             {activeTab === 'notifications' && (
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">通知设置</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Notification Settings</h2>
                 
                 <div className="space-y-6">
                   <div className="flex items-center justify-between py-4 border-b border-gray-200">
                     <div>
-                      <h3 className="text-lg font-medium text-gray-900">出价状态更新</h3>
-                      <p className="text-sm text-gray-600">当您的出价被接受或拒绝时通知您</p>
+                      <h3 className="text-lg font-medium text-gray-900">Bid Status Updates</h3>
+                      <p className="text-sm text-gray-600">Notify you when your bids are accepted or rejected</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" className="sr-only peer" defaultChecked />
@@ -210,8 +210,8 @@ export const BuyerDashboard: React.FC = () => {
                   
                   <div className="flex items-center justify-between py-4 border-b border-gray-200">
                     <div>
-                      <h3 className="text-lg font-medium text-gray-900">新产品推荐</h3>
-                      <p className="text-sm text-gray-600">根据您的兴趣推荐新的拍卖产品</p>
+                      <h3 className="text-lg font-medium text-gray-900">New Product Recommendations</h3>
+                      <p className="text-sm text-gray-600">Recommend new auction products based on your interests</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" className="sr-only peer" />
@@ -221,8 +221,8 @@ export const BuyerDashboard: React.FC = () => {
                   
                   <div className="flex items-center justify-between py-4 border-b border-gray-200">
                     <div>
-                      <h3 className="text-lg font-medium text-gray-900">价格提醒</h3>
-                      <p className="text-sm text-gray-600">当关注的产品价格变化时通知您</p>
+                      <h3 className="text-lg font-medium text-gray-900">Price Alerts</h3>
+                      <p className="text-sm text-gray-600">Notify you when prices change for products you're watching</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" className="sr-only peer" defaultChecked />
@@ -232,8 +232,8 @@ export const BuyerDashboard: React.FC = () => {
                   
                   <div className="flex items-center justify-between py-4">
                     <div>
-                      <h3 className="text-lg font-medium text-gray-900">营销邮件</h3>
-                      <p className="text-sm text-gray-600">接收促销活动和特别优惠信息</p>
+                      <h3 className="text-lg font-medium text-gray-900">Marketing Emails</h3>
+                      <p className="text-sm text-gray-600">Receive promotional activities and special offers</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" className="sr-only peer" />
@@ -244,7 +244,7 @@ export const BuyerDashboard: React.FC = () => {
                 
                 <div className="mt-8 pt-6 border-t border-gray-200">
                   <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                    保存设置
+                    Save Settings
                   </button>
                 </div>
               </div>

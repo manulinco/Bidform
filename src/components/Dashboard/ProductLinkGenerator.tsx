@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Copy, ExternalLink, Share2, Code, MessageCircle, QrCode, Plus, Twitter, Facebook, Linkedin, Instagram } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useMerchantStore } from '../../stores/merchantStore'
 import { ShareCardGenerator } from '../ShareCard/ShareCardGenerator'
 import { CreateProductModal } from './CreateProductModal'
 import { toast } from 'react-hot-toast'
 
 export const ProductLinkGenerator: React.FC = () => {
+  const { t } = useTranslation()
   const { bidForms } = useMerchantStore()
   const [selectedForm, setSelectedForm] = useState<string>('')
   const [activeTab, setActiveTab] = useState<'link' | 'embed' | 'share'>('link')
@@ -108,8 +110,8 @@ function MyComponent() {
       <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Earn the Choice Link Generator</h2>
-            <p className="text-gray-600 mt-1">Create powerful links that help buyers earn their choice through meaningful connections</p>
+            <h2 className="text-2xl font-bold text-gray-900">{t('productLinkGenerator.title')}</h2>
+            <p className="text-gray-600 mt-1">{t('productLinkGenerator.subtitle')}</p>
           </div>
           <button
             onClick={() => setShowCreateModal(true)}

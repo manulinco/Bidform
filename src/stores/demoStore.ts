@@ -42,8 +42,8 @@ interface DemoState {
 const demoProducts: DemoProduct[] = [
   {
     id: 'demo-vintage-watch',
-    title: '1960年代劳力士古董腕表',
-    description: '稀有的1960年代劳力士Submariner，保存完好，带原装表盒和证书。这是一款极具收藏价值的古董腕表。',
+    title: '1960s Vintage Rolex Watch',
+    description: 'Rare 1960s Rolex Submariner in excellent condition with original box and certificate. A highly collectible vintage timepiece.',
     price: 25000,
     currency: 'CNY',
     minBidRatio: 70,
@@ -53,8 +53,8 @@ const demoProducts: DemoProduct[] = [
   },
   {
     id: 'demo-art-painting',
-    title: '现代抽象油画作品',
-    description: '知名艺术家创作的现代抽象油画，尺寸120x80cm，已装裱，适合收藏或装饰。',
+    title: 'Modern Abstract Oil Painting',
+    description: 'Contemporary abstract oil painting by renowned artist, 120x80cm, professionally framed. Perfect for collection or decoration.',
     price: 8800,
     currency: 'CNY',
     minBidRatio: 60,
@@ -64,8 +64,8 @@ const demoProducts: DemoProduct[] = [
   },
   {
     id: 'demo-vintage-car',
-    title: '1985年保时捷911经典跑车',
-    description: '经典的1985年保时捷911 Carrera，里程数较低，保养记录完整，是收藏家的理想选择。',
+    title: '1985 Porsche 911 Classic Sports Car',
+    description: 'Classic 1985 Porsche 911 Carrera with low mileage and complete maintenance records. Ideal choice for collectors.',
     price: 180000,
     currency: 'CNY',
     minBidRatio: 80,
@@ -82,7 +82,7 @@ export const useDemoStore = create<DemoState>((set, get) => ({
   demoBidForms: demoProducts,
 
   initializeDemo: () => {
-    // 随机选择一个演示产品
+    // Randomly select a demo product
     const randomProduct = demoProducts[Math.floor(Math.random() * demoProducts.length)]
     set({ 
       currentProduct: randomProduct,
@@ -124,5 +124,5 @@ export const useDemoStore = create<DemoState>((set, get) => ({
   }
 }))
 
-// 导出演示数据供其他组件使用
+// Export demo data for use by other components
 export { demoProducts }

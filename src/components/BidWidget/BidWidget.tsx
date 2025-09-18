@@ -47,7 +47,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
   const [formData, setFormData] = useState({
     buyerName: '',
     buyerEmail: '',
-    offerAmount: 0, // 用户需要自己填写
+    offerAmount: 0, // User needs to fill this in
     message: ''
   })
 
@@ -68,7 +68,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
     try {
       if (isDemo) {
         // Demo mode - simulate the process
-        toast.success('🎯 演示：正在处理您的出价...')
+        toast.success('🎯 Demo: Processing your bid...')
         
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 1500))
@@ -84,7 +84,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
           finalStatus: 'pending'
         })
 
-        toast.success('🎯 演示：模拟支付处理中...')
+        toast.success('🎯 Demo: Simulating payment processing...')
         
         // Simulate payment processing
         await new Promise(resolve => setTimeout(resolve, 2000))
@@ -113,7 +113,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
 
         toast.success('Offer submitted! Processing payment...')
         
-        // 模拟支付确认 (在实际应用中，这会通过Stripe处理)
+        // Simulate payment confirmation (in real app, this would be handled by Stripe)
         setTimeout(async () => {
           const paymentIntentId = result.data!.client_secret.split('_secret')[0]
           await confirmPayment(paymentIntentId, 'deposit')
@@ -135,7 +135,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
     setFormData({
       buyerName: '',
       buyerEmail: '',
-      offerAmount: 0, // 重置为0，用户需要自己填写
+      offerAmount: 0, // Reset to 0, user needs to fill this in
       message: ''
     })
   }
@@ -170,7 +170,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
               style={{ backgroundColor: themeColor }}
             >
               <History className="w-4 h-4 mr-2" />
-              查看我的出价历史
+              View My Bid History
             </Link>
             <button
               onClick={resetForm}
@@ -191,7 +191,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
         className="w-full py-4 px-6 rounded-2xl font-bold text-white transition-all transform hover:scale-105 shadow-lg"
         style={{ backgroundColor: themeColor }}
       >
-        {isDemo ? '🎯 体验演示：立即出价' : 'Make an Offer'}
+        {isDemo ? '🎯 Experience Demo: Make Offer Now' : 'Make an Offer'}
       </button>
     )
   }
@@ -200,7 +200,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
     <div className="bg-white border-2 rounded-3xl p-6 shadow-xl" style={{ borderColor: themeColor }}>
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-bold text-gray-900">
-          {isDemo ? '🎯 演示模式：提交出价' : 'Make an Offer'}
+          {isDemo ? '🎯 Demo Mode: Submit Bid' : 'Make an Offer'}
         </h3>
         <button
           onClick={() => setIsOpen(false)}
@@ -229,7 +229,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
       {isDemo && (
         <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-xl">
           <p className="text-sm text-blue-800">
-            🎯 <strong>演示模式：</strong> 这是模拟演示，不会产生真实付款。
+            🎯 <strong>Demo Mode:</strong> This is a simulation demo, no real payment will be processed.
           </p>
         </div>
       )}
@@ -268,17 +268,17 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
             Enter Your Bid Amount
           </label>
           
-          {/* 智能出价建议 */}
+          {/* Smart Bid Suggestions */}
           {suggestedBids && (
             <div className="mb-3 p-3 bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl border border-purple-200">
-              <p className="text-sm font-medium text-gray-700 mb-2">💡 智能出价建议</p>
+              <p className="text-sm font-medium text-gray-700 mb-2">💡 Smart Bid Suggestions</p>
               <div className="grid grid-cols-3 gap-2">
                 <button
                   type="button"
                   onClick={() => setFormData(prev => ({ ...prev, offerAmount: suggestedBids.conservative }))}
                   className="p-2 text-xs bg-green-100 hover:bg-green-200 text-green-800 rounded-lg transition-all"
                 >
-                  <div className="font-medium">保守</div>
+                  <div className="font-medium">Conservative</div>
                   <div>{currency} {suggestedBids.conservative.toLocaleString()}</div>
                 </button>
                 <button
@@ -286,7 +286,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
                   onClick={() => setFormData(prev => ({ ...prev, offerAmount: suggestedBids.moderate }))}
                   className="p-2 text-xs bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-lg transition-all"
                 >
-                  <div className="font-medium">适中</div>
+                  <div className="font-medium">Moderate</div>
                   <div>{currency} {suggestedBids.moderate.toLocaleString()}</div>
                 </button>
                 <button
@@ -294,7 +294,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
                   onClick={() => setFormData(prev => ({ ...prev, offerAmount: suggestedBids.aggressive }))}
                   className="p-2 text-xs bg-orange-100 hover:bg-orange-200 text-orange-800 rounded-lg transition-all"
                 >
-                  <div className="font-medium">激进</div>
+                  <div className="font-medium">Aggressive</div>
                   <div>{currency} {suggestedBids.aggressive.toLocaleString()}</div>
                 </button>
               </div>
@@ -358,7 +358,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
             <>
               <Send className="w-5 h-5 mr-2" />
               {formData.offerAmount > 0 
-                ? (isDemo ? `🎯 演示：支付 ${currency} ${Math.ceil(formData.offerAmount * (depositPercentage / 100)).toLocaleString()}` : `Submit Bid & Pay ${depositPercentage}%`)
+                ? (isDemo ? `🎯 Demo: Pay ${currency} ${Math.ceil(formData.offerAmount * (depositPercentage / 100)).toLocaleString()}` : `Submit Bid & Pay ${depositPercentage}%`)
                 : 'Enter Your Bid Amount'
               }
             </>

@@ -656,7 +656,7 @@ const LandingPage: React.FC<LandingPageProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             {[
               {
                 name: "Free",
@@ -664,50 +664,67 @@ const LandingPage: React.FC<LandingPageProps> = ({
                 period: "/month",
                 description: "Perfect for getting started",
                 features: [
-                  "Unlimited bid forms",
-                  "5% service fee",
-                  "Basic email support",
+                  "5 bid forms",
+                  "Customer support",
                   "Standard templates",
-                  "CSV export"
+                  "CSV export",
+                  "Extra resources: 5% service fee"
                 ],
                 cta: "Start Free",
                 popular: false,
                 color: "from-gray-600 to-gray-700"
               },
               {
-                name: "Basic",
-                price: "$19.9",
+                name: "Starter",
+                price: "$29",
                 period: "/month",
                 description: "For growing businesses",
                 features: [
-                  "Up to 5 active forms",
-                  "0% service fee",
-                  "Priority email support",
+                  "200 bid forms",
+                  "Priority customer support",
                   "Custom branding",
                   "Advanced analytics",
-                  "Webhook support"
+                  "Webhook integration",
+                  "Extra resources: 5% service fee"
                 ],
                 cta: "Start Trial",
                 popular: true,
-                color: "from-purple-600 to-pink-600"
+                color: "from-blue-500 to-cyan-500"
               },
               {
                 name: "Pro",
+                price: "$79",
+                period: "/month",
+                description: "For scaling businesses",
+                features: [
+                  "Unlimited bid forms",
+                  "Priority customer support",
+                  "Advanced analytics",
+                  "Custom branding",
+                  "Full API access",
+                  "Extra resources: 5% service fee"
+                ],
+                cta: "Upgrade Now",
+                popular: false,
+                color: "from-purple-500 to-pink-500"
+              },
+              {
+                name: "Enterprise",
                 price: "$199",
                 period: "/month",
-                description: "For enterprises",
+                description: "For large enterprises",
                 features: [
-                  "Up to 10,000 forms",
-                  "0% service fee",
-                  "Phone & chat support",
-                  "White label options",
-                  "API access",
-                  "Multi-brand support",
-                  "Custom integrations"
+                  "20,000 bid forms",
+                  "Premium customer support",
+                  "White-label solution",
+                  "Full API access",
+                  "Multi-brand management",
+                  "Dedicated account manager",
+                  "Extra resources: 5% service fee"
                 ],
                 cta: "Contact Sales",
                 popular: false,
-                color: "from-indigo-600 to-purple-600"
+                color: "from-emerald-500 to-teal-500"
               }
             ].map((plan, index) => (
               <div key={index} className={`relative bg-white/80 backdrop-blur-sm rounded-3xl transition-all hover:shadow-2xl border-2 ${

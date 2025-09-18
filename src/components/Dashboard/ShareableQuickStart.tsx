@@ -7,7 +7,7 @@ export const ShareableQuickStart: React.FC = () => {
   const [copied, setCopied] = useState(false)
   const { demoBidForms } = useDemoStore()
   
-  // 使用第一个演示表单作为示例
+  // Use the first demo form as example
   const sampleForm = demoBidForms[0]
 
   const generateShareableLink = () => {
@@ -18,12 +18,12 @@ export const ShareableQuickStart: React.FC = () => {
   const copyShareLink = () => {
     const shareLink = generateShareableLink()
     const shareText = sampleForm ? 
-      `${sampleForm.title} - 起价 ${sampleForm.currency} ${sampleForm.price.toLocaleString()}，快来出价吧！\n${shareLink}` : ''
+      `${sampleForm.title} - Starting at ${sampleForm.currency} ${sampleForm.price.toLocaleString()}, come and bid!\n${shareLink}` : ''
     
     if (shareText) {
       navigator.clipboard.writeText(shareText)
       setCopied(true)
-      toast.success('分享链接已复制到剪贴板！')
+      toast.success('Share link copied to clipboard!')
       setTimeout(() => setCopied(false), 2000)
     }
   }
@@ -33,14 +33,14 @@ export const ShareableQuickStart: React.FC = () => {
   }
 
   const shareToWeChat = () => {
-    // 微信分享逻辑（实际项目中需要集成微信SDK）
-    toast.success('请复制链接到微信分享')
+    // WeChat sharing logic (requires WeChat SDK integration in real project)
+    toast.success('Please copy the link to share on WeChat')
     copyShareLink()
   }
 
   const shareToWeibo = () => {
     const shareLink = generateShareableLink()
-    const shareText = encodeURIComponent(`${sampleForm?.title} - 起价 ${sampleForm?.currency} ${sampleForm?.price.toLocaleString()}，快来出价吧！`)
+    const shareText = encodeURIComponent(`${sampleForm?.title} - Starting at ${sampleForm?.currency} ${sampleForm?.price.toLocaleString()}, come and bid!`)
     const weiboUrl = `https://service.weibo.com/share/share.php?url=${encodeURIComponent(shareLink)}&title=${shareText}`
     window.open(weiboUrl, '_blank')
   }
@@ -54,26 +54,26 @@ export const ShareableQuickStart: React.FC = () => {
           <Share2 className="w-8 h-8 text-white" />
         </div>
         <h3 className="text-2xl font-bold text-gray-900 mb-2">
-          快速开始 - 分享出价链接
+          Quick Start - Share Bid Links
         </h3>
         <p className="text-gray-600">
-          创建产品出价链接，一键分享到社交平台，让更多人参与出价
+          Create product bid links and share to social platforms with one click to get more people bidding
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
-        {/* 步骤1：生成分享链接 */}
+        {/* Step 1: Generate Share Link */}
         <div className="space-y-4">
           <div className="flex items-center mb-4">
             <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
               1
             </div>
-            <h4 className="font-semibold text-gray-900">生成分享链接</h4>
+            <h4 className="font-semibold text-gray-900">Generate Share Link</h4>
           </div>
 
           <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4 border border-purple-200">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-purple-700 font-medium">产品出价链接</span>
+              <span className="text-purple-700 font-medium">Product Bid Link</span>
               <div className="flex space-x-2">
                 <button
                   onClick={copyShareLink}
@@ -82,12 +82,12 @@ export const ShareableQuickStart: React.FC = () => {
                   {copied ? (
                     <>
                       <Check className="w-4 h-4 mr-1" />
-                      已复制!
+                      Copied!
                     </>
                   ) : (
                     <>
                       <Copy className="w-4 h-4 mr-1" />
-                      复制
+                      Copy
                     </>
                   )}
                 </button>
@@ -96,7 +96,7 @@ export const ShareableQuickStart: React.FC = () => {
                   className="flex items-center text-purple-600 hover:text-purple-700 transition-colors text-sm"
                 >
                   <ExternalLink className="w-4 h-4 mr-1" />
-                  预览
+                  Preview
                 </button>
               </div>
             </div>
@@ -106,7 +106,7 @@ export const ShareableQuickStart: React.FC = () => {
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex-shrink-0"></div>
                 <div className="flex-1 min-w-0">
                   <h5 className="font-medium text-gray-900 truncate">{sampleForm.title}</h5>
-                  <p className="text-sm text-gray-600">起价 {sampleForm.currency} {sampleForm.price.toLocaleString()}</p>
+                  <p className="text-sm text-gray-600">Starting at {sampleForm.currency} {sampleForm.price.toLocaleString()}</p>
                 </div>
               </div>
               <p className="text-xs text-purple-600 font-mono break-all bg-gray-50 p-2 rounded">
@@ -116,13 +116,13 @@ export const ShareableQuickStart: React.FC = () => {
           </div>
         </div>
 
-        {/* 步骤2：分享到社交平台 */}
+        {/* Step 2: Share to Social Platforms */}
         <div className="space-y-4">
           <div className="flex items-center mb-4">
             <div className="w-8 h-8 bg-pink-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
               2
             </div>
-            <h4 className="font-semibold text-gray-900">分享到社交平台</h4>
+            <h4 className="font-semibold text-gray-900">Share to Social Platforms</h4>
           </div>
 
           <div className="space-y-3">
@@ -135,8 +135,8 @@ export const ShareableQuickStart: React.FC = () => {
                   <MessageCircle className="w-5 h-5 text-white" />
                 </div>
                 <div className="text-left">
-                  <p className="font-medium text-gray-900">微信朋友圈</p>
-                  <p className="text-sm text-gray-600">分享给微信好友</p>
+                  <p className="font-medium text-gray-900">WeChat Moments</p>
+                  <p className="text-sm text-gray-600">Share to WeChat friends</p>
                 </div>
               </div>
               <ExternalLink className="w-5 h-5 text-gray-400" />
@@ -151,8 +151,8 @@ export const ShareableQuickStart: React.FC = () => {
                   <Share2 className="w-5 h-5 text-white" />
                 </div>
                 <div className="text-left">
-                  <p className="font-medium text-gray-900">新浪微博</p>
-                  <p className="text-sm text-gray-600">发布到微博</p>
+                  <p className="font-medium text-gray-900">Sina Weibo</p>
+                  <p className="text-sm text-gray-600">Post to Weibo</p>
                 </div>
               </div>
               <ExternalLink className="w-5 h-5 text-gray-400" />
@@ -160,10 +160,10 @@ export const ShareableQuickStart: React.FC = () => {
 
             <div className="p-4 bg-blue-50 rounded-xl border border-blue-200">
               <div className="text-sm text-gray-600">
-                <p className="mb-2">✅ 手机端完美适配</p>
-                <p className="mb-2">✅ 社交平台友好</p>
-                <p className="mb-2">✅ 实时出价通知</p>
-                <p>✅ 安全支付保障</p>
+                <p className="mb-2">✅ Perfect mobile adaptation</p>
+                <p className="mb-2">✅ Social platform friendly</p>
+                <p className="mb-2">✅ Real-time bid notifications</p>
+                <p>✅ Secure payment protection</p>
               </div>
             </div>
           </div>
@@ -173,11 +173,11 @@ export const ShareableQuickStart: React.FC = () => {
       <div className="mt-8 p-6 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl text-white">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="font-semibold mb-1">准备好开始了吗？</h4>
-            <p className="text-purple-100 text-sm">创建你的第一个出价表单，开始接收出价</p>
+            <h4 className="font-semibold mb-1">Ready to get started?</h4>
+            <p className="text-purple-100 text-sm">Create your first bid form and start receiving offers</p>
           </div>
           <button className="bg-white text-purple-600 px-6 py-2 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
-            创建表单
+            Create Form
           </button>
         </div>
       </div>

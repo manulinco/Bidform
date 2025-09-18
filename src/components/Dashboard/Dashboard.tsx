@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { Users, DollarSign, TrendingUp, Plus, Settings, LogOut, Home, FileText, MessageSquare, Zap, History } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '../../stores/authStore'
 import { useMerchantStore } from '../../stores/merchantStore'
 import { BidFormsList } from './BidFormsList'
 import { CreateProductModal } from './CreateProductModal'
 import { OffersList } from './OffersList'
 import { ProductLinkGenerator } from './ProductLinkGenerator'
+import { LanguageSwitcher } from '../LanguageSwitcher'
+import { UsageCard } from './UsageCard'
+import { UpgradeModal } from './UpgradeModal'
+import { UsageTestControls } from './UsageTestControls'
 
 export const Dashboard: React.FC = () => {
+  const { t } = useTranslation()
   const { user, signOut } = useAuthStore()
   const { merchant, bidForms, offers, stats, loading, initialize } = useMerchantStore()
   const [activeTab, setActiveTab] = useState<'overview' | 'forms' | 'offers' | 'generator'>('generator')
   const [showCreateModal, setShowCreateModal] = useState(false)
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [testUsageCount, setTestUsageCount] = useState(bidForms.length)
 
   // Get user display name
   const userName = user?.user_metadata?.name || user?.email?.split('@')[0] || 'User'
 
   useEffect(() => {
-    if (user?.id) {
-      initialize(user.id)
-    }
-  }, [user?.id, initialize])
+    // 总是使用演示数据，确保 offers 能正确显示
+    initialize('demo-user-123')
+  }, [initialize])
 
   const handleSignOut = async () => {
     await signOut()
@@ -51,15 +58,16 @@ export const Dashboard: React.FC = () => {
             </div>
             
             <div className="flex items-center space-x-4">
+              <LanguageSwitcher />
               <div className="text-sm text-gray-600">
-                Welcome, <span className="font-medium text-gray-900">{userName}</span>
+                {t('dashboard.welcomeBack')}, <span className="font-medium text-gray-900">{userName}</span>
               </div>
               <button
                 onClick={handleSignOut}
                 className="flex items-center px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
+                {t('navigation.logout')}
               </button>
             </div>
           </div>
@@ -177,20 +185,36 @@ export const Dashboard: React.FC = () => {
                   
                   <div className="relative z-10">
                     <h1 className="text-3xl font-bold mb-2">
-                      Welcome to Earn the Choice! 💫
+                      {t('dashboard.title')} 🌈
                     </h1>
                     <p className="text-purple-100 text-lg mb-6">
-                      Where authentic words unlock extra worth - your story matters more than numbers
+                      {t('dashboard.subtitle')}
                     </p>
                     <button
                       onClick={() => setActiveTab('generator')}
                       className="bg-white text-purple-600 px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-gray-50 transition-all flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                     >
-                      Activate Your Destiny Power
-                      <span className="text-xl ml-2">✨</span>
+                      {t('dashboard.cta')}
+                      <span className="text-xl ml-2">🌈</span>
                     </button>
                   </div>
                 </div>
+
+                {/* Usage Test Controls */}
+                <UsageTestControls
+                  currentForms={testUsageCount}
+                  onAddForm={() => setTestUsageCount(prev => prev + 1)}
+                  onRemoveForm={() => setTestUsageCount(prev => Math.max(0, prev - 1))}
+                  onReset={() => setTestUsageCount(bidForms.length)}
+                />
+
+                {/* Usage Card */}
+                <UsageCard
+                  currentForms={testUsageCount}
+                  planLimit={5}
+                  planName="Free"
+                  onUpgrade={() => setShowUpgradeModal(true)}
+                />
 
                 {/* Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -325,6 +349,16 @@ export const Dashboard: React.FC = () => {
         <CreateProductModal
           isOpen={showCreateModal}
           onClose={() => setShowCreateModal(false)}
+        />
+      )}
+
+      {/* Upgrade Modal */}
+      {showUpgradeModal && (
+        <UpgradeModal
+          isOpen={showUpgradeModal}
+          onClose={() => setShowUpgradeModal(false)}
+          currentPlan="Free"
+          currentUsage={testUsageCount}
         />
       )}
     </div>
