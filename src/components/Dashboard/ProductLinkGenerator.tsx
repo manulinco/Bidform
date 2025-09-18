@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Copy, ExternalLink, Share2, Code, MessageCircle, QrCode, Plus, Twitter, Facebook, Linkedin } from 'lucide-react'
+import { Copy, ExternalLink, Share2, Code, MessageCircle, QrCode, Plus, Twitter, Facebook, Linkedin, Instagram } from 'lucide-react'
 import { useMerchantStore } from '../../stores/merchantStore'
 import { ShareCardGenerator } from '../ShareCard/ShareCardGenerator'
 import { CreateProductModal } from './CreateProductModal'
@@ -86,9 +86,16 @@ function MyComponent() {
       case 'whatsapp':
         shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + productLink)}`
         break
-      case 'telegram':
-        shareUrl = `https://t.me/share/url?url=${encodeURIComponent(productLink)}&text=${encodeURIComponent(text)}`
-        break
+      case 'instagram':
+        // Instagram doesn't support direct URL sharing, so we copy to clipboard
+        navigator.clipboard.writeText(`${text} ${productLink}`).then(() => {
+          toast.success('Content copied! Open Instagram and paste in your story or post.')
+          // Optionally open Instagram web
+          window.open('https://www.instagram.com/', '_blank')
+        }).catch(() => {
+          toast.error('Failed to copy content')
+        })
+        return
     }
     
     if (shareUrl) {
@@ -278,11 +285,11 @@ function MyComponent() {
                       WhatsApp
                     </button>
                     <button
-                      onClick={() => shareToSocial('telegram')}
-                      className="flex items-center justify-center px-4 py-3 bg-blue-400 text-white rounded-xl hover:bg-blue-500 transition-colors"
+                      onClick={() => shareToSocial('instagram')}
+                      className="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl hover:from-purple-600 hover:to-pink-600 transition-colors"
                     >
-                      <Share2 className="w-4 h-4 mr-2" />
-                      Telegram
+                      <Instagram className="w-4 h-4 mr-2" />
+                      Instagram
                     </button>
                   </div>
                 </div>
