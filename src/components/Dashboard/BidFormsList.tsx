@@ -14,22 +14,21 @@ export const BidFormsList: React.FC<BidFormsListProps> = ({ forms }) => {
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [previewId, setPreviewId] = useState<string | null>(null)
 
-  const copyEmbedCode = (form: BidForm) => {
-    const embedCode = `<script src="https://cdn.bidform.online/widget.js"
-  data-merchant="${form.merchant_id}"
-  data-form-id="${form.id}"
-  data-title="${form.title}"
-  data-price="${form.price}"
-  data-currency="${form.currency}"
-  data-theme="${form.theme_color}"
-  async></script>
-<div id="bidform-widget"></div>`
+  const copyShareLink = (form: BidForm) => {
+    const shareLink = `${window.location.origin}/bid/${form.id}`
+    const shareText = `${form.title} - 起价 ${form.currency} ${form.price.toLocaleString()}，快来出价吧！
+${shareLink}`
 
-    navigator.clipboard.writeText(embedCode)
+    navigator.clipboard.writeText(shareText)
     setCopiedId(form.id)
-    toast.success('Embed code copied to clipboard!')
+    toast.success('分享链接已复制到剪贴板！')
     
     setTimeout(() => setCopiedId(null), 2000)
+  }
+
+  const openShareLink = (form: BidForm) => {
+    const shareLink = `${window.location.origin}/bid/${form.id}`
+    window.open(shareLink, '_blank')
   }
 
   if (forms.length === 0) {
@@ -82,28 +81,28 @@ export const BidFormsList: React.FC<BidFormsListProps> = ({ forms }) => {
 
             <div className="flex items-center space-x-2 ml-4">
               <button
-                onClick={() => copyEmbedCode(form)}
+                onClick={() => copyShareLink(form)}
                 className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
               >
                 {copiedId === form.id ? (
                   <>
                     <Copy className="w-4 h-4 mr-2 text-green-600" />
-                    Copied!
+                    已复制!
                   </>
                 ) : (
                   <>
                     <Copy className="w-4 h-4 mr-2" />
-                    Copy Code
+                    复制链接
                   </>
                 )}
               </button>
               
               <button 
-                onClick={() => setPreviewId(previewId === form.id ? null : form.id)}
-                className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
+                onClick={() => openShareLink(form)}
+                className="flex items-center px-3 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-xl transition-colors"
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
-                {previewId === form.id ? 'Hide Preview' : 'Preview'}
+                查看页面
               </button>
               
               <button className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">
@@ -112,19 +111,20 @@ export const BidFormsList: React.FC<BidFormsListProps> = ({ forms }) => {
             </div>
           </div>
 
-          {/* Embed Code Preview */}
-          <div className="mt-4 p-4 bg-gray-900 rounded-xl">
-            <pre className="text-green-400 text-xs overflow-x-auto">
-              <code>{`<script src="https://cdn.bidform.online/widget.js"
-  data-merchant="${form.merchant_id}"
-  data-form-id="${form.id}"
-  data-title="${form.title}"
-  data-price="${form.price}"
-  data-currency="${form.currency}"
-  data-theme="${form.theme_color}"
-  async></script>
-<div id="bidform-widget"></div>`}</code>
-            </pre>
+          {/* Share Link Preview */}
+          <div className="mt-4 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border border-purple-200">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="font-medium text-gray-900">分享链接</h4>
+              <span className="text-xs text-purple-600 bg-purple-100 px-2 py-1 rounded-full">
+                可直接分享到社交平台
+              </span>
+            </div>
+            <div className="bg-white p-3 rounded-lg border border-gray-200">
+              <p className="text-sm text-gray-600 mb-2">{form.title} - 起价 {form.currency} {form.price.toLocaleString()}，快来出价吧！</p>
+              <p className="text-xs text-purple-600 font-mono break-all">
+                {window.location.origin}/bid/{form.id}
+              </p>
+            </div>
           </div>
 
           {/* Live Preview */}

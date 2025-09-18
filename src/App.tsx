@@ -2,11 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useAuthStore } from './stores/authStore';
-import { LoginModal } from './components/Auth/LoginModal';
+import { SimpleAuth } from './components/Auth/SimpleAuth';
 import { Dashboard } from './components/Dashboard/Dashboard';
+import { MyBidsHistory } from './components/Dashboard/MyBidsHistory';
+import { BuyerDashboard } from './components/BuyerDashboard/BuyerDashboard';
+import { ProductDetail } from './components/ProductDetail/ProductDetail';
+import { TransactionDetail } from './components/TransactionDetail/TransactionDetail';
 import { TestPage } from './components/TestPage';
 import { DemoPage } from './components/DemoPage';
+import { BidPage } from './components/BidPage/BidPage';
+import { SharePage } from './components/ShareCard/SharePage';
 import { Helmet } from 'react-helmet';
+import ErrorBoundary from './components/ErrorBoundary';
 import { 
   Code2, 
   Zap, 
@@ -74,45 +81,91 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
-        <Toaster position="top-right" />
-        
-        <Routes>
-          <Route 
-            path="/" 
-            element={
-              user ? <Navigate to="/dashboard" replace /> : <LandingPage 
-                showLoginModal={showLoginModal}
-                setShowLoginModal={setShowLoginModal}
-                isMenuOpen={isMenuOpen}
-                setIsMenuOpen={setIsMenuOpen}
-                copied={copied}
-                copyCode={copyCode}
-                activeFeature={activeFeature}
-              />
-            } 
+    <ErrorBoundary>
+      <Router>
+        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
+          <Toaster position="top-right" />
+          
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                user ? <Navigate to="/dashboard" replace /> : <LandingPage 
+                  showLoginModal={showLoginModal}
+                  setShowLoginModal={setShowLoginModal}
+                  isMenuOpen={isMenuOpen}
+                  setIsMenuOpen={setIsMenuOpen}
+                  copied={copied}
+                  copyCode={copyCode}
+                  activeFeature={activeFeature}
+                />
+              } 
+            />
+            <Route 
+              path="/dashboard" 
+              element={user ? (
+                <ErrorBoundary>
+                  <Dashboard />
+                </ErrorBoundary>
+              ) : <Navigate to="/" replace />} 
+            />
+            <Route 
+              path="/my-bids" 
+              element={user ? (
+                <ErrorBoundary>
+                  <MyBidsHistory />
+                </ErrorBoundary>
+              ) : <Navigate to="/" replace />} 
+            />
+            <Route 
+              path="/buyer-dashboard" 
+              element={user ? (
+                <ErrorBoundary>
+                  <BuyerDashboard />
+                </ErrorBoundary>
+              ) : <Navigate to="/" replace />} 
+            />
+            <Route 
+              path="/test" 
+              element={<TestPage />} 
+            />
+            <Route 
+              path="/demo" 
+              element={<DemoPage />} 
+            />
+            <Route 
+              path="/bid/:formId" 
+              element={<BidPage />} 
+            />
+            <Route 
+              path="/share/:formId" 
+              element={<SharePage />} 
+            />
+            <Route 
+              path="/product/:id" 
+              element={user ? (
+                <ErrorBoundary>
+                  <ProductDetail />
+                </ErrorBoundary>
+              ) : <Navigate to="/" replace />} 
+            />
+            <Route 
+              path="/transaction/:id" 
+              element={user ? (
+                <ErrorBoundary>
+                  <TransactionDetail />
+                </ErrorBoundary>
+              ) : <Navigate to="/" replace />} 
+            />
+          </Routes>
+          
+          <SimpleAuth 
+            isOpen={showLoginModal} 
+            onClose={() => setShowLoginModal(false)} 
           />
-          <Route 
-            path="/dashboard" 
-            element={user ? <Dashboard /> : <Navigate to="/" replace />} 
-          />
-          <Route 
-            path="/test" 
-            element={<TestPage />} 
-          />
-          <Route 
-            path="/demo" 
-            element={<DemoPage />} 
-          />
-        </Routes>
-        
-        <LoginModal 
-          isOpen={showLoginModal} 
-          onClose={() => setShowLoginModal(false)} 
-        />
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </ErrorBoundary>
   );
 }
 

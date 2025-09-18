@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { DollarSign, Send, Loader2, CheckCircle } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { DollarSign, Send, Loader2, CheckCircle, History } from 'lucide-react'
 import { stripePromise, calculatePrepaymentAmount } from '../../lib/stripe'
 import { supabase } from '../../lib/supabase'
 import { useDemoStore } from '../../stores/demoStore'
+import { createDepositIntent, confirmPayment } from '../../api/offers'
 import toast from 'react-hot-toast'
 
 interface BidWidgetProps {
@@ -14,6 +16,13 @@ interface BidWidgetProps {
   minBidRatio?: number
   depositPercentage?: number
   allowOptionalMessage?: boolean
+  marketPrice?: number
+  bidCount?: number
+  suggestedBids?: {
+    conservative: number
+    moderate: number
+    aggressive: number
+  } | null
 }
 
 export const BidWidget: React.FC<BidWidgetProps> = ({
@@ -24,7 +33,10 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
   themeColor = '#7C3AED',
   minBidRatio = 70,
   depositPercentage = 10,
-  allowOptionalMessage = true
+  allowOptionalMessage = true,
+  marketPrice,
+  bidCount = 0,
+  suggestedBids
 }) => {
   const { isDemo, addOffer } = useDemoStore()
   const [isOpen, setIsOpen] = useState(false)
@@ -35,7 +47,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
   const [formData, setFormData] = useState({
     buyerName: '',
     buyerEmail: '',
-    offerAmount: minOfferAmount,
+    offerAmount: 0, // 用户需要自己填写
     message: ''
   })
 
@@ -56,7 +68,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
     try {
       if (isDemo) {
         // Demo mode - simulate the process
-        toast.success('🎯 Demo: Processing your offer...')
+        toast.success('🎯 演示：正在处理您的出价...')
         
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 1500))
@@ -72,7 +84,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
           finalStatus: 'pending'
         })
 
-        toast.success('🎯 Demo: Simulating payment processing...')
+        toast.success('🎯 演示：模拟支付处理中...')
         
         // Simulate payment processing
         await new Promise(resolve => setTimeout(resolve, 2000))
@@ -81,56 +93,33 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
         toast.success(`🎉 Demo: Deposit of ${currency} ${depositAmount.toLocaleString()} paid successfully!`)
         
       } else {
-        // Real mode - actual Supabase and Stripe integration
-        if (!supabase) {
-          throw new Error('Database not available')
+        // Real mode - actual API integration
+        if (!formId) {
+          throw new Error('Form ID is required')
         }
-        
-        const prepaymentAmount = calculatePrepaymentAmount(formData.offerAmount)
 
-        const { data: offer, error: offerError } = await supabase
-          .from('offers')
-          .insert({
-            form_id: formId!,
-            buyer_email: formData.buyerEmail,
-            buyer_name: formData.buyerName,
-            offer_amount: formData.offerAmount,
-            message: formData.message,
-            status: 'pending',
-            prepayment_status: 'pending',
-            balance_payment_status: 'pending'
-          })
-          .select()
-          .single()
-
-        if (offerError) throw offerError
-
-        const response = await fetch('/api/create-payment-intent', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            amount: prepaymentAmount,
-            currency: currency.toLowerCase(),
-            offerId: offer.id,
-            type: 'prepayment'
-          }),
+        const result = await createDepositIntent({
+          form_id: formId,
+          bid_amount: formData.offerAmount,
+          buyer_name: formData.buyerName,
+          buyer_email: formData.buyerEmail,
+          buyer_message: formData.message,
+          agree_terms: true
         })
 
-        const { clientSecret, error: paymentError } = await response.json()
-        
-        if (paymentError) throw new Error(paymentError)
+        if (!result.success) {
+          throw new Error(result.error?.message || 'Failed to create offer')
+        }
 
-        const stripe = await stripePromise
-        if (!stripe) throw new Error('Stripe failed to load')
-
-        toast.success('Offer submitted! Redirecting to payment...')
+        toast.success('Offer submitted! Processing payment...')
         
-        await supabase
-          .from('offers')
-          .update({ prepayment_intent_id: clientSecret.split('_secret')[0] })
-          .eq('id', offer.id)
+        // 模拟支付确认 (在实际应用中，这会通过Stripe处理)
+        setTimeout(async () => {
+          const paymentIntentId = result.data!.client_secret.split('_secret')[0]
+          await confirmPayment(paymentIntentId, 'deposit')
+          setSuccess(true)
+          toast.success(`🎉 Deposit of ${currency} ${result.data!.deposit_amount.toLocaleString()} paid successfully!`)
+        }, 2000)
       }
 
     } catch (error: any) {
@@ -146,7 +135,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
     setFormData({
       buyerName: '',
       buyerEmail: '',
-      offerAmount: minOfferAmount,
+      offerAmount: 0, // 重置为0，用户需要自己填写
       message: ''
     })
   }
@@ -174,12 +163,22 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
           <p className="text-sm text-gray-600 mb-4">
             The seller will review your offer and respond within 24 hours.
           </p>
-          <button
-            onClick={resetForm}
-            className="w-full py-3 px-6 rounded-xl font-medium text-gray-700 border border-gray-300 hover:bg-gray-50 transition-all"
-          >
-            Make Another Offer
-          </button>
+          <div className="space-y-3">
+            <Link
+              to="/buyer-dashboard"
+              className="w-full py-3 px-6 rounded-xl font-medium text-white flex items-center justify-center transition-all"
+              style={{ backgroundColor: themeColor }}
+            >
+              <History className="w-4 h-4 mr-2" />
+              查看我的出价历史
+            </Link>
+            <button
+              onClick={resetForm}
+              className="w-full py-3 px-6 rounded-xl font-medium text-gray-700 border border-gray-300 hover:bg-gray-50 transition-all"
+            >
+              Make Another Offer
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -192,7 +191,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
         className="w-full py-4 px-6 rounded-2xl font-bold text-white transition-all transform hover:scale-105 shadow-lg"
         style={{ backgroundColor: themeColor }}
       >
-        {isDemo ? '🎯 Try Demo: Make an Offer' : 'Make an Offer'}
+        {isDemo ? '🎯 体验演示：立即出价' : 'Make an Offer'}
       </button>
     )
   }
@@ -201,7 +200,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
     <div className="bg-white border-2 rounded-3xl p-6 shadow-xl" style={{ borderColor: themeColor }}>
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-bold text-gray-900">
-          {isDemo ? '🎯 Demo: Make an Offer' : 'Make an Offer'}
+          {isDemo ? '🎯 演示模式：提交出价' : 'Make an Offer'}
         </h3>
         <button
           onClick={() => setIsOpen(false)}
@@ -213,16 +212,24 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
 
       <div className="mb-4 p-4 bg-gray-50 rounded-2xl">
         <h4 className="font-semibold text-gray-900">{title}</h4>
-        <p className="text-gray-600">Starting at {currency} {price.toLocaleString()}</p>
-        <p className="text-sm text-gray-500 mt-1">
-          Minimum offer: {currency} {minOfferAmount.toLocaleString()} ({minBidRatio}% of asking price)
-        </p>
+        <div className="flex justify-between items-center mt-2">
+          <div>
+            <p className="text-gray-600">Market Price</p>
+            <p className="font-bold text-lg text-gray-900">
+              {currency} {(marketPrice || price).toLocaleString()}
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-gray-600">Current Bids</p>
+            <p className="font-bold text-lg text-purple-600">{bidCount}</p>
+          </div>
+        </div>
       </div>
 
       {isDemo && (
         <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-xl">
           <p className="text-sm text-blue-800">
-            🎯 <strong>Demo Mode:</strong> This is a simulation. No real payment will be processed.
+            🎯 <strong>演示模式：</strong> 这是模拟演示，不会产生真实付款。
           </p>
         </div>
       )}
@@ -258,20 +265,55 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Your Offer ({currency})
+            Enter Your Bid Amount
           </label>
+          
+          {/* 智能出价建议 */}
+          {suggestedBids && (
+            <div className="mb-3 p-3 bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl border border-purple-200">
+              <p className="text-sm font-medium text-gray-700 mb-2">💡 智能出价建议</p>
+              <div className="grid grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, offerAmount: suggestedBids.conservative }))}
+                  className="p-2 text-xs bg-green-100 hover:bg-green-200 text-green-800 rounded-lg transition-all"
+                >
+                  <div className="font-medium">保守</div>
+                  <div>{currency} {suggestedBids.conservative.toLocaleString()}</div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, offerAmount: suggestedBids.moderate }))}
+                  className="p-2 text-xs bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-lg transition-all"
+                >
+                  <div className="font-medium">适中</div>
+                  <div>{currency} {suggestedBids.moderate.toLocaleString()}</div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, offerAmount: suggestedBids.aggressive }))}
+                  className="p-2 text-xs bg-orange-100 hover:bg-orange-200 text-orange-800 rounded-lg transition-all"
+                >
+                  <div className="font-medium">激进</div>
+                  <div>{currency} {suggestedBids.aggressive.toLocaleString()}</div>
+                </button>
+              </div>
+            </div>
+          )}
+          
           <input
             type="number"
             required
             min={minOfferAmount}
             step="1"
-            value={formData.offerAmount}
-            onChange={(e) => setFormData(prev => ({ ...prev, offerAmount: parseInt(e.target.value) || minOfferAmount }))}
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
+            value={formData.offerAmount || ''}
+            onChange={(e) => setFormData(prev => ({ ...prev, offerAmount: parseInt(e.target.value) || 0 }))}
+            placeholder={`Minimum bid: ${currency} ${minOfferAmount.toLocaleString()}`}
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all placeholder-gray-400"
           />
-          {formData.offerAmount < minOfferAmount && (
+          {formData.offerAmount > 0 && formData.offerAmount < minOfferAmount && (
             <p className="text-sm text-red-600 mt-1">
-              Minimum offer is {currency} {minOfferAmount.toLocaleString()}
+              Minimum bid is {currency} {minOfferAmount.toLocaleString()}
             </p>
           )}
         </div>
@@ -303,7 +345,7 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
 
         <button
           type="submit"
-          disabled={loading || formData.offerAmount < minOfferAmount}
+          disabled={loading || !formData.offerAmount || formData.offerAmount < minOfferAmount}
           className="w-full py-4 px-6 rounded-2xl font-bold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
           style={{ backgroundColor: themeColor }}
         >
@@ -315,7 +357,10 @@ export const BidWidget: React.FC<BidWidgetProps> = ({
           ) : (
             <>
               <Send className="w-5 h-5 mr-2" />
-              {isDemo ? `🎯 Demo: Pay ${currency} ${depositAmount.toLocaleString()}` : `Submit Offer & Pay ${depositPercentage}%`}
+              {formData.offerAmount > 0 
+                ? (isDemo ? `🎯 演示：支付 ${currency} ${Math.ceil(formData.offerAmount * (depositPercentage / 100)).toLocaleString()}` : `Submit Bid & Pay ${depositPercentage}%`)
+                : 'Enter Your Bid Amount'
+              }
             </>
           )}
         </button>

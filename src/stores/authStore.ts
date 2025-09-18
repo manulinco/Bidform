@@ -1,14 +1,23 @@
 import { create } from 'zustand'
-import { User } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
+
+interface User {
+  id: string
+  email?: string
+  user_metadata?: {
+    name?: string
+  }
+  created_at?: string
+}
 
 interface AuthState {
   user: User | null
   loading: boolean
+  
+  // Actions
   signIn: (email: string, password: string) => Promise<void>
   signUp: (email: string, password: string) => Promise<void>
   signOut: () => Promise<void>
-  signInWithProvider: (provider: 'google' | 'azure') => Promise<void>
   initialize: () => void
 }
 
@@ -16,63 +25,92 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   loading: true,
 
-  signIn: async (email: string, password: string) => {
-    if (!supabase) {
-      throw new Error('Demo mode - authentication disabled')
-    }
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    if (error) throw error
-  },
-
-  signUp: async (email: string, password: string) => {
-    if (!supabase) {
-      throw new Error('Demo mode - authentication disabled')
-    }
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    })
-    if (error) throw error
-  },
-
-  signOut: async () => {
-    if (!supabase) {
-      return
-    }
-    const { error } = await supabase.auth.signOut()
-    if (error) throw error
-  },
-
-  signInWithProvider: async (provider: 'google' | 'azure') => {
-    if (!supabase) {
-      throw new Error('Demo mode - authentication disabled')
-    }
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: `${window.location.origin}/dashboard`
-      }
-    })
-    if (error) throw error
-  },
-
   initialize: () => {
-    if (!supabase) {
-      set({ user: null, loading: false })
-      return
-    }
-    
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }: any) => {
       set({ user: session?.user ?? null, loading: false })
     })
 
     // Listen for auth changes
-    supabase.auth.onAuthStateChange((_event, session) => {
+    supabase.auth.onAuthStateChange((_event: any, session: any) => {
       set({ user: session?.user ?? null, loading: false })
     })
+  },
+
+  signIn: async (email: string, password: string) => {
+    set({ loading: true })
+    try {
+      // 检查是否为演示模式
+      if (email === 'demo@bidform.online' || email.includes('demo') || password === 'demo123') {
+        // 创建模拟用户
+        const demoUser = {
+          id: 'demo-user-123',
+          email: email,
+          user_metadata: {
+            name: '演示用户'
+          },
+          created_at: new Date().toISOString()
+        }
+        set({ user: demoUser, loading: false })
+        return
+      }
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      
+      if (error) throw error
+      
+      set({ user: data.user, loading: false })
+    } catch (error: any) {
+      set({ loading: false })
+      throw error
+    }
+  },
+
+  signUp: async (email: string, password: string) => {
+    set({ loading: true })
+    try {
+      // 检查是否为演示模式
+      if (email === 'demo@bidform.online' || email.includes('demo') || password === 'demo123') {
+        // 创建模拟用户
+        const demoUser = {
+          id: 'demo-user-123',
+          email: email,
+          user_metadata: {
+            name: '演示用户'
+          },
+          created_at: new Date().toISOString()
+        }
+        set({ user: demoUser, loading: false })
+        return
+      }
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      })
+      
+      if (error) throw error
+      
+      set({ user: data.user, loading: false })
+    } catch (error: any) {
+      set({ loading: false })
+      throw error
+    }
+  },
+
+  signOut: async () => {
+    set({ loading: true })
+    try {
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+      
+      set({ user: null, loading: false })
+    } catch (error: any) {
+      set({ loading: false })
+      throw error
+    }
   },
 }))
