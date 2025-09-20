@@ -1,6 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { X, Check, Zap, Crown, Rocket } from 'lucide-react'
+import { X, Check, Zap, Crown, Rocket, Star } from 'lucide-react'
 
 interface UpgradeModalProps {
   isOpen: boolean
@@ -15,64 +14,78 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   currentPlan,
   currentUsage
 }) => {
-  const { t } = useTranslation()
-
   if (!isOpen) return null
 
   const plans = [
     {
-      name: 'Starter',
-      price: 19,
-      forms: 50,
+      name: 'Free',
+      price: 0,
+      forms: 5,
       submissions: 20,
+      icon: <Star className="w-6 h-6" />,
+      color: 'from-gray-500 to-gray-600',
+      features: [
+        '5 bid forms',
+        '20 monthly submissions',
+        'Basic customer support',
+        'Standard templates',
+        'Email notifications',
+        'CSV export'
+      ]
+    },
+    {
+      name: 'Starter',
+      price: 29,
+      forms: 100,
+      submissions: 500,
       icon: <Zap className="w-6 h-6" />,
       color: 'from-blue-500 to-cyan-500',
       features: [
-        '50 bid forms',
-        '20 monthly payment submissions',
-        'Customer support',
+        '100 bid forms',
+        '500 monthly submissions',
+        'Priority customer support',
         'Basic analytics',
-        'Email notifications',
-        'Standard templates'
-      ],
-      extraResources: '5% service fee'
+        'Custom branding',
+        'Email & SMS notifications',
+        'Advanced templates'
+      ]
     },
     {
       name: 'Pro',
-      price: 49,
+      price: 79,
       forms: 500,
-      submissions: 2000,
+      submissions: 2500,
       icon: <Crown className="w-6 h-6" />,
       color: 'from-purple-500 to-pink-500',
       popular: true,
       features: [
         '500 bid forms',
-        '2,000 monthly payment submissions',
-        'Priority customer support',
-        'Advanced analytics',
-        'Custom branding',
+        '2,500 monthly submissions',
+        'Premium customer support',
+        'Advanced analytics & reporting',
+        'Full custom branding',
         'Webhook integration',
-        'API access'
-      ],
-      extraResources: '5% service fee'
+        'API access',
+        'Multi-user accounts'
+      ]
     },
     {
-      name: 'Custom Plan',
-      price: 149,
+      name: 'Enterprise',
+      price: 199,
       forms: Infinity,
-      submissions: 20000,
+      submissions: 10000,
       icon: <Rocket className="w-6 h-6" />,
       color: 'from-emerald-500 to-teal-500',
       features: [
         'Unlimited bid forms',
-        '20,000 monthly payment submissions',
-        'Premium customer support',
+        '10,000 monthly submissions',
+        'Dedicated account manager',
         'White-label solution',
         'Full API access',
         'Custom integrations',
-        'Dedicated account manager'
-      ],
-      extraResources: '5% service fee'
+        'Advanced security features',
+        'SLA guarantee'
+      ]
     }
   ]
 
@@ -136,7 +149,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                   </p>
                 </div>
 
-                <ul className="space-y-4 mb-6">
+                <ul className="space-y-4 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center">
                       <Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
@@ -145,32 +158,22 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                   ))}
                 </ul>
 
-                {/* Extra Resources Support */}
-                <div className="mb-8 p-4 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-200">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <div className="w-2 h-2 bg-orange-500 rounded-full mr-3"></div>
-                      <span className="text-sm font-medium text-gray-800">Extra Resources Support</span>
-                    </div>
-                    <span className="text-sm font-bold text-orange-600">{plan.extraResources}</span>
-                  </div>
-                  <p className="text-xs text-gray-600 mt-2 ml-5">
-                    Service fee applies to resources exceeding plan limits
-                  </p>
-                </div>
-
                 <button
                   onClick={() => handleUpgrade(plan.name, plan.price)}
                   className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all ${
                     plan.popular
                       ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-lg hover:shadow-xl'
-                      : plan.name === '自定义版本'
+                      : plan.name === 'Enterprise'
                       ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 shadow-lg'
+                      : plan.name === 'Free'
+                      ? 'bg-gray-100 text-gray-600 cursor-not-allowed'
                       : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
                   }`}
+                  disabled={plan.name === 'Free'}
                 >
-                  {plan.name === 'Custom Plan' ? 'Contact Sales' : 
-                   plan.forms !== Infinity && currentUsage > plan.forms ? 'Downgrade' : 'Upgrade'} to {plan.name}
+                  {plan.name === 'Free' ? 'Current Plan' :
+                   plan.name === 'Enterprise' ? 'Contact Sales' : 
+                   plan.forms !== Infinity && currentUsage > plan.forms ? 'Downgrade' : 'Upgrade'} {plan.name !== 'Free' ? `to ${plan.name}` : ''}
                 </button>
 
                 {plan.forms !== Infinity && currentUsage > plan.forms && (
@@ -191,11 +194,11 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">
-                  💰 How do service fees work?
+                  💰 How does billing work?
                 </h4>
                 <p className="text-gray-600 text-sm">
-                  Resources within your subscription are <strong>included in your plan</strong>. 
-                  If you exceed your limits, only the extra resources will have a 5% service fee on transactions.
+                  All plans are billed monthly. Your subscription includes all the features and limits shown. 
+                  No hidden fees or transaction charges.
                 </p>
               </div>
 
@@ -211,21 +214,21 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
 
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">
-                  📊 What happens to my existing resources?
+                  📊 What happens if I exceed my limits?
                 </h4>
                 <p className="text-gray-600 text-sm">
-                  All your existing resources remain active. If you downgrade to a plan with fewer included resources, 
-                  the excess resources will incur 5% service fees.
+                  If you approach your plan limits, we'll notify you to upgrade. 
+                  Your service continues uninterrupted while you decide.
                 </p>
               </div>
 
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">
-                  🎯 Free trial available?
+                  🎯 Is there a free trial?
                 </h4>
                 <p className="text-gray-600 text-sm">
-                  You're already on our free plan! Upgrade anytime to get more included resources. 
-                  No commitment required.
+                  Yes! Start with our Free plan to test all features. 
+                  Upgrade anytime when you need more capacity.
                 </p>
               </div>
             </div>
